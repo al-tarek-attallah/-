@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عيد ميلاد سعيد يا منّة 🎂💖</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            /* خلفية بمبي متدرجة ومبهجة */
+            background: linear-gradient(135deg, #ffe4e1 0%, #ffb6c1 50%, #ff69b4 100%);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .glass-box {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 192, 203, 0.5);
+            border-radius: 25px;
+            padding: 30px;
+            margin: 20px 0;
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.2);
+            transition: all 0.5s ease;
+        }
+
+        h1 { color: #d81b60; font-weight: 900; margin-bottom: 15px; font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+        h2 { color: #e91e63; margin-bottom: 15px; }
+        p { font-size: 1.2em; line-height: 1.8; color: #4a4a4a; margin-bottom: 15px; font-weight: 600; }
+
+        /* زر الحفلة */
+        .btn-party {
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.5em;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            box-shadow: 0 10px 20px rgba(255, 20, 147, 0.4);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 10px 20px rgba(255, 20, 147, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 10px 30px rgba(255, 20, 147, 0.6); }
+            100% { transform: scale(1); box-shadow: 0 10px 20px rgba(255, 20, 147, 0.4); }
+        }
+
+        /* التورتة */
+        .cake-emoji {
+            font-size: 8em;
+            margin: 20px 0;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));
+            transition: transform 0.5s;
+        }
+
+        .btn-wish {
+            background: #ff4081;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.2em;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: inherit;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+        .btn-wish:hover { background: #c2185b; }
+
+        /* أقسام مخفية في البداية */
+        #hidden-content { display: none; width: 100%; display: flex; flex-direction: column; align-items: center;}
+        #letter, #game { opacity: 0; transform: translateY(50px); transition: 1s; }
+
+        /* لعبة الهدايا */
+        .gifts-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .gift-box {
+            font-size: 3.5em;
+            cursor: pointer;
+            transition: 0.3s;
+            user-select: none;
+        }
+
+        .gift-box:hover { transform: translateY(-10px) rotate(5deg); }
+        .gift-box.opened { cursor: default; transform: none; font-size: 1.5em; padding: 20px 0; font-weight: bold; color: #d81b60;}
+
+        /* الزينة المتساقطة */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            z-index: 9999;
+            animation: fall 4s linear forwards;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- موسيقى عيد الميلاد -->
+    <!-- استخدمت موسيقى مبهجة بدون حقوق عشان تشتغل بسهولة -->
+    <audio id="bday-music" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/09/23/audio_731422faac.mp3?filename=happy-birthday-121300.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- شاشة البداية -->
+    <div class="glass-box" id="intro-screen" style="margin-top: 20vh;">
+        <h1>النهارده يوم مش عادي! 🌸</h1>
+        <p>عشان نبدأ الاحتفال، عليّ الصوت ودوسي على الزرار اللي تحت..</p>
+        <button class="btn-party" onclick="startParty()">ابدئي الحفلة 🎉</button>
+    </div>
+
+    <!-- المحتوى المخفي (يظهر بعد بدء الحفلة) -->
+    <div id="hidden-content">
+        
+        <!-- التورتة والأمنية -->
+        <div class="glass-box" id="cake-section" style="display: none;">
+            <h1>كل سنة وإنتي طيبة يا قمر! 🎂</h1>
+            <p>غمضي عينك.. اتمني أمنية حلوة زيك للسنة الجديدة.. وبعدين دوسي على الزرار عشان تطفي الشمع!</p>
+            <div class="cake-emoji" id="cake">🎂</div>
+            <button class="btn-wish" id="wish-btn" onclick="makeWish()">اتمنيت.. اطفي الشمع 🌬️</button>
+        </div>
+
+        <!-- الرسالة -->
+        <div class="glass-box" id="letter">
+            <h2>رسالة من القلب 💌</h2>
+            <p><strong>يا أجمل منّة في الدنيا..</strong></p>
+            <p>كل سنة وإنتي طيبة، وكل سنة وإنتي ناجحة وشاطرة ومكافحة زي ما إنتي. سنة جديدة بتبدأ في عمرك، بتمنى من كل قلبي إنها تكون سنة العوض، الراحة، والسعادة اللي بجد.</p>
+            <p>أنا عارف إن الفترة اللي فاتت كانت مليانة ضغط وتعب، وإنك شايلة حمل كبير.. بس النهارده مفيش شغل، مفيش ضغط، ومفيش أي حاجة تعكر مزاجك. النهارده يومك إنتي وبس.</p>
+            <p>إنتي إنسانة غالية أوي، وتستاهلي إن الدنيا كلها تضحكلِك. فخدي نفس عميق، افردي وشك الجميل ده، وادخلي سنتك الجديدة بطاقة حلوة وابتسامة أحلى.</p>
+            <p>أنا دايماً موجود في ضهرك، بدعمك، وبفرح لنجاحك. ربنا يسعد قلبك ويحققلك كل أمنية اتمنيتيها وإنتي بتطفي الشمع.</p>
+            <p style="color: #d81b60; font-weight: 900; font-size: 1.4em;">بحبك أوي.. وعقبال 100 سنة سعادة! 💖</p>
+        </div>
+
+        <!-- لعبة الهدايا -->
+        <div class="glass-box" id="game">
+            <h2>هدايا الحظ 🎁</h2>
+            <p>عشان إنتي بنت مميزة، ليكي عندي هدايا كتير.. اختاري صندوق وافتحيه وشوفي هيطلعلك إيه!</p>
+            <div class="gifts-grid" id="gifts-container">
+                <div class="gift-box" onclick="openGift(this, 'إنتي أشطر بشمهندسة في الكوكب 👩‍💻✨')">🎁</div>
+                <div class="gift-box" onclick="openGift(this, 'ضحكتك بتنور الدنيا، متخبيهاش أبداً 😊💖')">🎁</div>
+                <div class="gift-box" onclick="openGift(this, 'خروجة جامدة جداً على حسابي قريباً 🍕🥳')">🎁</div>
+                <div class="gift-box" onclick="openGift(this, 'راحة بال وسعادة ملهاش آخر إن شاء الله 🌸')">🎁</div>
+                <div class="gift-box" onclick="openGift(this, 'شيكولاتة وقهوة لحد ما تزهقي 🍫☕')">🎁</div>
+                <div class="gift-box" onclick="openGift(this, 'البدلة بجد كانت قمر عليكي! 😉✨')">🎁</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function startParty() {
+            // تشغيل الأغنية
+            const music = document.getElementById('bday-music');
+            music.volume = 0.5;
+            music.play();
+
+            // إخفاء البداية وإظهار التورتة
+            document.getElementById('intro-screen').style.display = 'none';
+            document.getElementById('cake-section').style.display = 'block';
+            
+            // شوية زينة خفيفة
+            shootConfetti(30);
+        }
+
+        function makeWish() {
+            // تغيير شكل التورتة (كأن الشمع اتطفى)
+            const cake = document.getElementById('cake');
+            cake.innerText = '🍰'; // اتحولت لقطعة كيكة
+            cake.style.transform = 'scale(1.2)';
+            
+            document.getElementById('wish-btn').style.display = 'none';
+
+            // زينة كثيفة جداً عشان الحفلة!
+            shootConfetti(150);
+
+            // إظهار باقي الصفحة (الرسالة واللعبة)
+            setTimeout(() => {
+                document.getElementById('letter').style.opacity = '1';
+                document.getElementById('letter').style.transform = 'translateY(0)';
+            }, 1000);
+
+            setTimeout(() => {
+                document.getElementById('game').style.opacity = '1';
+                document.getElementById('game').style.transform = 'translateY(0)';
+            }, 2000);
+        }
+
+        function openGift(element, message) {
+            if (!element.classList.contains('opened')) {
+                element.classList.add('opened');
+                // تفريغ العنصر ووضع الرسالة
+                element.innerHTML = message;
+                
+                // زينة صغيرة عند فتح الهدية
+                shootConfetti(20);
+            }
+        }
+
+        function shootConfetti(amount) {
+            const colors = ['#ff1493', '#ff69b4', '#ffb6c1', '#ffffff', '#ffd700'];
+            for (let i = 0; i < amount; i++) {
+                setTimeout(() => {
+                    const conf = document.createElement('div');
+                    conf.className = 'confetti';
+                    conf.style.left = Math.random() * 100 + 'vw';
+                    conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    conf.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    
+                    // أشكال مختلفة للزينة (مربعات ودوائر)
+                    if (Math.random() > 0.5) conf.style.borderRadius = '50%';
+                    
+                    document.body.appendChild(conf);
+                    
+                    setTimeout(() => conf.remove(), 5000);
+                }, i * 30);
+            }
+        }
+    </script>
+</body>
+</html>
